@@ -158,4 +158,8 @@ systemctl start grafana-server
 
 systemctl enable grafana-server
 
+#ID Import Grafana
+Import linux (nodenya) metrics -> dashboard URL ID : 1860
+Import PostgreSQL Metrics -> dashboard URL ID : 9628
+
 ```
