@@ -1,1 +1,1 @@
-# kumpulan-script.sh
+# kumpulan-script
