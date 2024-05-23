@@ -2,6 +2,6 @@
 
 cat <<EOF >>/etc/docker/daemon.json
 {
-    "insecure-registries" : ["reg-v1.ut.ac.id"]
+    "insecure-registries" : ["domain"]
 }
 EOF
