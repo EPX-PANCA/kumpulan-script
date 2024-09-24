@@ -20,6 +20,13 @@ for vmid in $(qm list | awk 'NR>1 {print $1}'); do
   else
     echo "Storage    : $storage_info"
   fi
+  # IP Address (butuh qemu-guest-agent terpasang)
+  ip_info=$(qm agent $vmid network-get-interfaces 2>/dev/null | grep "ip-address" | awk -F'"' '{print $4}')
+  if [ -z "$ip_info" ]; then
+    echo "IP Address : Tidak tersedia (pastikan qemu-guest-agent terpasang)"
+  else
+    echo "IP Address : $ip_info"
+  fi
   echo "========================================"
   echo ""
 done
