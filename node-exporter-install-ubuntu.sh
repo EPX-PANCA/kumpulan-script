@@ -15,11 +15,15 @@ tar xzf $NODE_EXPORTER.tar.gz
 # Remove tar.gz file after extraction
 rm -rf $NODE_EXPORTER.tar.gz
 
-# Step 3: Move files to /etc/node_exporter
-echo "Moving Node Exporter files to /etc/node_exporter..."
-sudo mv $NODE_EXPORTER /etc/node_exporter
+# Step 3: Create directory /etc/node-exporter if it doesn't exist
+echo "Creating directory /etc/node-exporter if it doesn't exist..."
+sudo mkdir -p /etc/node-exporter
 
-# Step 4: Create Node Exporter service
+# Step 4: Move files to /etc/node-exporter
+echo "Moving Node Exporter files to /etc/node-exporter..."
+sudo mv $NODE_EXPORTER/node_exporter /etc/node-exporter
+
+# Step 5: Create Node Exporter service
 echo "Creating Node Exporter service file..."
 sudo bash -c 'cat > /etc/systemd/system/node_exporter.service << EOF
 [Unit]
@@ -28,20 +32,27 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-ExecStart=/etc/node_exporter/node_exporter
+ExecStart=/etc/node-exporter/node_exporter
 Restart=always
+StandardOutput=append:/var/log/node_exporter.log
+StandardError=append:/var/log/node_exporter.log
 
 [Install]
 WantedBy=multi-user.target
 EOF'
 
-# Step 5: Reload systemd and enable the Node Exporter service
+# Step 6: Create log file and set permissions
+echo "Creating log file for Node Exporter..."
+sudo touch /var/log/node_exporter.log
+sudo chmod 644 /var/log/node_exporter.log
+
+# Step 7: Reload systemd and enable the Node Exporter service
 echo "Reloading systemd and starting Node Exporter..."
 sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
 sudo systemctl restart node_exporter
 
-# Step 6: Check if Node Exporter is running
+# Step 8: Check if Node Exporter is running
 echo "Checking Node Exporter status..."
 sudo systemctl status node_exporter --no-pager
 
