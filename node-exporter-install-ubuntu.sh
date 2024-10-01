@@ -22,7 +22,7 @@ sudo mkdir -p /etc/node-exporter
 # Step 4: Move files to /etc/node-exporter
 echo "Moving Node Exporter files to /etc/node-exporter..."
 sudo mv $NODE_EXPORTER/node_exporter /etc/node-exporter
-
+sudo rm -rf $NODE_EXPORTER
 # Step 5: Create Node Exporter service
 echo "Creating Node Exporter service file..."
 sudo bash -c 'cat > /etc/systemd/system/node-exporter.service << EOF
