@@ -25,7 +25,7 @@ sudo mv $NODE_EXPORTER/node_exporter /etc/node-exporter
 
 # Step 5: Create Node Exporter service
 echo "Creating Node Exporter service file..."
-sudo bash -c 'cat > /etc/systemd/system/node_exporter.service << EOF
+sudo bash -c 'cat > /etc/systemd/system/node-exporter.service << EOF
 [Unit]
 Description=Node Exporter
 Wants=network-online.target
@@ -49,11 +49,11 @@ sudo chmod 644 /var/log/node_exporter.log
 # Step 7: Reload systemd and enable the Node Exporter service
 echo "Reloading systemd and starting Node Exporter..."
 sudo systemctl daemon-reload
-sudo systemctl enable node_exporter
-sudo systemctl restart node_exporter
+sudo systemctl enable node-exporter
+sudo systemctl restart node-exporter
 
 # Step 8: Check if Node Exporter is running
 echo "Checking Node Exporter status..."
-sudo systemctl status node_exporter --no-pager
+sudo systemctl status node-exporter --no-pager
 
 echo "Node Exporter setup completed!"
